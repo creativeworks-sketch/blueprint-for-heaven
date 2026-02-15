@@ -279,6 +279,82 @@
       }
     }
 
+    /* ── Language Toggle ── */
+    .lang-toggle {
+      position: fixed;
+      top: 1.2rem;
+      right: 1.5rem;
+      z-index: 100;
+      display: flex;
+      gap: 0.25rem;
+      background: rgba(10, 10, 10, 0.7);
+      backdrop-filter: blur(8px);
+      border: 1px solid #3a3430;
+      border-radius: 2rem;
+      padding: 0.25rem;
+    }
+
+    .lang-toggle button {
+      font-family: 'Cormorant Garamond', 'Georgia', serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.05em;
+      padding: 0.35rem 0.85rem;
+      border: none;
+      border-radius: 1.5rem;
+      background: transparent;
+      color: #807870;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .lang-toggle button.active {
+      background: #2a2420;
+      color: #e8e0d4;
+    }
+
+    .lang-toggle button:hover:not(.active) {
+      color: #c8bfb0;
+    }
+
+    /* Language visibility */
+    body.lang-en .col-zh,
+    body.lang-en .hero-title-zh,
+    body.lang-en .footer-engraving-zh { display: none; }
+
+    body.lang-zh .col-en,
+    body.lang-zh .hero-title-en,
+    body.lang-zh .footer-engraving,
+    body.lang-zh .footer-credit { display: none; }
+
+    body.lang-en .bilingual,
+    body.lang-zh .bilingual {
+      grid-template-columns: 1fr;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    body.lang-en .col-en,
+    body.lang-zh .col-zh {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    body.lang-zh .hero-title-zh {
+      font-size: clamp(2.2rem, 5vw, 4rem);
+    }
+
+    @media (max-width: 768px) {
+      .lang-toggle {
+        top: 0.75rem;
+        right: 0.75rem;
+      }
+
+      .lang-toggle button {
+        font-size: 0.78rem;
+        padding: 0.3rem 0.65rem;
+      }
+    }
+
     /* ── Animations ── */
 
     /* Parallax hero background */
@@ -340,6 +416,13 @@
   </style>
 </head>
 <body>
+
+  <!-- ── Language Toggle ── -->
+  <div class="lang-toggle">
+    <button onclick="setLang('en')">English</button>
+    <button onclick="setLang('both')" class="active">Bilingual</button>
+    <button onclick="setLang('zh')">中文</button>
+  </div>
 
   <!-- ── Hero / Cover ── -->
   <section class="hero" id="top">
@@ -541,6 +624,7 @@
     <p class="footer-engraving">The Flammarion engraving depicts a traveler peering through the edge of the sky to witness the intricate machinery of the universe, symbolizing the pure human desire to transcend the known.</p>
     <p class="footer-engraving-zh">《弗拉馬里翁版畫》：畫中旅人探出穹蒼邊界，窺視宇宙複雜的神祕結構，象徵人類對突破認知最純粹的渴望。</p>
     <p class="footer-credit">Cover art: <em>The Flammarion Engraving</em> (1888), via Public Domain Review.</p>
+    <p class="footer-engraving-zh" style="margin-top: 0.5rem; font-size: 0.8rem; color: #605850;">封面：《弗拉馬里翁版畫》（1888），來源：Public Domain Review。</p>
     <p class="footer-credit" style="margin-top: 0.5rem;">&copy; 2020–2026 Cloe H. All rights reserved.</p>
   </footer>
 
@@ -567,6 +651,14 @@
     }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
     revealElements.forEach(el => observer.observe(el));
+
+    // Language toggle
+    function setLang(lang) {
+      document.body.classList.remove('lang-en', 'lang-zh');
+      if (lang !== 'both') document.body.classList.add('lang-' + lang);
+      document.querySelectorAll('.lang-toggle button').forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+    }
   </script>
 </body>
 </html>

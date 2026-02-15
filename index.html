@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blueprint for Heaven / 天國的藍圖 — Cloe H</title>
+  <meta name="description" content="A bilingual philosophical fable about a human who makes a deal with the Devil to build an ideal society. By Cloe H.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Noto+Serif+TC:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: #0a0a0a;
+      color: #e8e0d4;
+      font-size: 18px;
+      line-height: 1.8;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    .font-en {
+      font-family: 'Cormorant Garamond', 'Georgia', serif;
+    }
+
+    .font-zh {
+      font-family: 'Noto Serif TC', '宋體', serif;
+    }
+
+    /* ── Hero Section ── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: -10%;
+      transform: scale(1.1);
+      background-image: url('pdia-d4277b5b-85e6-4bdc-87d6-57f69cdb870e.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      filter: brightness(0.35) saturate(0.6);
+      z-index: 0;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(10, 10, 10, 0.3) 0%,
+        rgba(10, 10, 10, 0.1) 40%,
+        rgba(10, 10, 10, 0.4) 70%,
+        rgba(10, 10, 10, 1) 100%
+      );
+      z-index: 1;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 2rem;
+    }
+
+    .hero-title-en {
+      font-family: 'Cormorant Garamond', 'Georgia', serif;
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #f0e8dc;
+      margin-bottom: 0.3em;
+      text-shadow: 0 2px 20px rgba(0,0,0,0.6);
+    }
+
+    .hero-title-zh {
+      font-family: 'Noto Serif TC', serif;
+      font-size: clamp(1.8rem, 4vw, 3.2rem);
+      font-weight: 500;
+      color: #d4c8b8;
+      letter-spacing: 0.15em;
+      margin-bottom: 1.5em;
+      text-shadow: 0 2px 20px rgba(0,0,0,0.6);
+    }
+
+    .hero-author {
+      font-family: 'Cormorant Garamond', 'Georgia', serif;
+      font-size: 1.3rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      color: #b0a898;
+      margin-bottom: 0.5em;
+    }
+
+    .hero-copyright {
+      font-family: 'Cormorant Garamond', 'Georgia', serif;
+      font-size: 0.85rem;
+      color: #807870;
+      letter-spacing: 0.1em;
+    }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 2.5rem;
+      z-index: 2;
+      animation: float 2.5s ease-in-out infinite;
+      color: #807870;
+      font-size: 1.5rem;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(8px); }
+    }
+
+    /* ── Main Content ── */
+    .content-wrapper {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    /* ── Section Divider ── */
+    .divider {
+      text-align: center;
+      margin: 4rem 0;
+      color: #4a4440;
+      font-size: 1.5rem;
+      letter-spacing: 1em;
+    }
+
+    /* ── Bilingual Columns ── */
+    .bilingual {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+
+    .col-en {
+      font-family: 'Cormorant Garamond', 'Georgia', serif;
+      font-size: 1.25rem;
+      line-height: 1.9;
+      color: #e0d8cc;
+    }
+
+    .col-zh {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 1.05rem;
+      line-height: 2;
+      color: #d8d0c4;
+    }
+
+    .col-en p, .col-zh p {
+      margin-bottom: 1.2em;
+    }
+
+    .col-en .dialogue, .col-zh .dialogue {
+      margin-left: 0;
+    }
+
+    .section-title-en {
+      font-family: 'Cormorant Garamond', 'Georgia', serif;
+      font-size: 1.8rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      color: #c8bfb0;
+      margin-bottom: 1.5rem;
+      text-transform: uppercase;
+    }
+
+    .section-title-zh {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 1.5rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      color: #c8bfb0;
+      margin-bottom: 1.5rem;
+    }
+
+    /* ── Afterword ── */
+    .afterword .col-en {
+      font-size: 1.05rem;
+      line-height: 1.85;
+      color: #c8c0b4;
+    }
+
+    .afterword .col-zh {
+      font-size: 0.95rem;
+      line-height: 1.95;
+      color: #c0b8ac;
+    }
+
+    /* ── Footer ── */
+    .footer {
+      border-top: 1px solid #2a2420;
+      margin-top: 4rem;
+      padding: 3rem 2rem;
+      text-align: center;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .footer-image {
+      width: 100%;
+      max-width: 600px;
+      border-radius: 4px;
+      margin-bottom: 2rem;
+      opacity: 0.85;
+    }
+
+    .footer-engraving {
+      font-family: 'Cormorant Garamond', 'Georgia', serif;
+      font-size: 0.95rem;
+      font-style: italic;
+      color: #807870;
+      line-height: 1.7;
+      margin-bottom: 1rem;
+    }
+
+    .footer-engraving-zh {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 0.85rem;
+      color: #706860;
+      line-height: 1.8;
+      margin-bottom: 2rem;
+    }
+
+    .footer-credit {
+      font-family: 'Cormorant Garamond', 'Georgia', serif;
+      font-size: 0.9rem;
+      color: #605850;
+      letter-spacing: 0.1em;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .bilingual {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .content-wrapper {
+        padding: 2rem 1.2rem;
+      }
+
+      .col-en {
+        font-size: 1.05rem;
+        padding-bottom: 2rem;
+        border-bottom: 1px solid #2a2420;
+      }
+
+      .col-zh {
+        font-size: 1rem;
+      }
+
+      .hero-title-en {
+        letter-spacing: 0.04em;
+      }
+    }
+
+    /* ── Animations ── */
+
+    /* Parallax hero background */
+    .hero-bg {
+      will-change: transform;
+      transition: transform 0.1s linear;
+    }
+
+    /* Hero content fade-in on load */
+    .hero-content {
+      animation: heroFadeIn 2s ease-out forwards;
+    }
+
+    @keyframes heroFadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Scroll reveal: fade + slide up */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Stagger children in bilingual columns */
+    .reveal-children p {
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+
+    .reveal-children.visible p {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-children.visible p:nth-child(1) { transition-delay: 0s; }
+    .reveal-children.visible p:nth-child(2) { transition-delay: 0.08s; }
+    .reveal-children.visible p:nth-child(3) { transition-delay: 0.16s; }
+    .reveal-children.visible p:nth-child(4) { transition-delay: 0.24s; }
+    .reveal-children.visible p:nth-child(5) { transition-delay: 0.32s; }
+    .reveal-children.visible p:nth-child(6) { transition-delay: 0.4s; }
+
+    /* Respect reduced motion preference */
+    @media (prefers-reduced-motion: reduce) {
+      .reveal, .reveal-children p, .hero-content {
+        opacity: 1;
+        transform: none;
+        transition: none;
+        animation: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Hero / Cover ── -->
+  <section class="hero" id="top">
+    <div class="hero-bg" role="img" aria-label="The Flammarion Engraving (1888)"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1 class="hero-title-en">Blueprint for Heaven</h1>
+      <p class="hero-title-zh">天國的藍圖</p>
+      <p class="hero-author">Cloe H</p>
+      <p class="hero-copyright">&copy; 2020–2026 Cloe H. All rights reserved.</p>
+    </div>
+    <a href="#story" class="hero-scroll" aria-label="Scroll to story">&#8595;</a>
+  </section>
+
+  <!-- ── Story ── -->
+  <div class="content-wrapper" id="story">
+    <div class="bilingual">
+
+      <!-- English Column -->
+      <div class="col-en reveal-children">
+        <p>The taste of blood lingered in the air. A breath of wind drifted by with a hint of burnt flesh. Apart from some faint groans and the flapping of vultures, the earth illuminated by the starry sky was silent.</p>
+
+        <p>A human woke up and found itself surrounded by piles of corpses that stretched over the field in all directions. It grabbed onto a nearby body and realized the face belonged to someone familiar. In a panic, it noticed its legs were gone. Nausea, grief, and despair swept in. The human roared into the sky.</p>
+
+        <p>A slender shadow appeared among the dead. Blinked out. Snapped back across the field. Another blink&mdash;now an arm's length from the human.</p>
+
+        <p>Haloed by the bright moon, the long shadow arched over and pried into the human's eyes. The human glared back. The silhouette was unmistakable: the Devil, drawn by the stench of death.</p>
+
+        <p>&ldquo;I could feast on a soul like yours.&rdquo;</p>
+
+        <p>Without a voice, the Devil's words echoed inside the human's head.</p>
+
+        <p>&ldquo;Make a wish, and your soul shall be mine.&rdquo;</p>
+
+        <p>With sounds closer to growls than speech, the human spat blood and words: &ldquo;I want to build an ideal society.&rdquo;</p>
+
+        <p>The Devil knelt. Stars stormed toward the moon. Lights and clouds swirled, condensed, and evaporated. The world sank into darkness. A droplet of galaxy fell from the void, shifting like liquid before settling solid on the Devil's palm.</p>
+
+        <p>&ldquo;Eat. This is Knowledge.&rdquo;</p>
+
+        <p>Knowledge glided through the human's throat, seeping into every pore like air. Wounds healed. Legs regrew. The human stood up.</p>
+
+        <p>The deal was made.</p>
+      </div>
+
+      <!-- Chinese Column (Part 1) -->
+      <div class="col-zh reveal-children">
+        <p>空氣中血腥味瀰漫<br>微風拂過　夾雜著焦肉的氣息<br>除了微弱的呻吟與禿鷹的振翅聲<br>星空照耀的大地一片死寂</p>
+
+        <p>一隻人類醒來<br>發覺自己被屍堆環繞<br>抓住身旁的一具屍體<br>那張臉竟如此熟悉<br>低頭　自己的雙腿已不復存在<br>噁心　悲痛　絕望<br>人類仰天長嘯</p>
+
+        <p>一道修長的影子出現在死者之間<br>一眨眼　消失<br>一眨眼　橫越整片原野<br>一眨眼　近在咫尺</p>
+
+        <p>頭頂明月　長影弓身俯下<br>探入人類的雙眸<br>那輪廓無庸置疑：<br>是惡魔　被死亡的惡臭吸引而來</p>
+
+        <p>「你的靈魂　我可以大快朵頤」</p>
+
+        <p>沒有聲音　話語在人類腦中迴盪</p>
+
+        <p>「以你的靈魂為代價　許願吧」</p>
+
+        <p>人類擠出低吼似的聲音：<br>「我要建立一個理想國」</p>
+
+        <p>惡魔跪下<br>群星朝月亮奔湧<br>光影與雲霧　盤旋　凝聚　蒸發<br>世界陷入黑暗<br>一滴星河從虛空墜落<br>如液體般流轉<br>如固體般停於惡魔掌中</p>
+
+        <p>「吃下去　這是知識」</p>
+
+        <p>知識滑過人類的喉嚨<br>如空氣般滲入每一個毛孔<br>傷口癒合<br>雙腿再生<br>人類站了起來</p>
+
+        <p>契約達成</p>
+      </div>
+    </div>
+
+    <!-- ── Section Divider ── -->
+    <div class="divider reveal">&middot; &middot; &middot;</div>
+
+    <!-- ── Story Part 2: The Dialogue ── -->
+    <div class="bilingual">
+
+      <!-- English Column (Part 2) -->
+      <div class="col-en reveal-children">
+        <p>Yet, even with Knowledge coursing through its veins, the human could not conceive the blueprint for an ideal society. If each soul defines &ldquo;good&rdquo; differently, how could one place be ideal for all? How could there be Heaven?</p>
+
+        <p>The Devil asked, &ldquo;What sits at the core of an ideal society?&rdquo;</p>
+
+        <p>&ldquo;Government or ideology?&rdquo;</p>
+
+        <p>&ldquo;They are tools, secondary to the truth. The foundation is the control of resources.&rdquo;</p>
+
+        <p>The human agreed. The Devil continued: &ldquo;For abundant resources, you need an empire. To consolidate an empire, you need fear. Only fools rule as tyrants. True leaders make the people fear the &lsquo;other&rsquo; and cast themselves as the only recourse. The best threat is the one that does not exist.&rdquo;</p>
+
+        <p>&ldquo;How does one control the resources?&rdquo;</p>
+
+        <p>&ldquo;To control the resources, you control the population. To control the population, you control the women. To control the women, you make them less than men.&rdquo;</p>
+
+        <p>&ldquo;How does one control the people?&rdquo;</p>
+
+        <p>&ldquo;Control the stories they tell. Call them religion or history. Gild them with freedom or equality. Give them a reason to live, then they will die for you. Those who die for ideals are better soldiers than those who fight to avoid the lash.&rdquo;</p>
+
+        <p>&ldquo;What if that is not enough?&rdquo;</p>
+
+        <p>&ldquo;Then, keep them in a state of craving. Create desires that never existed and call it progress.&rdquo;</p>
+
+        <p>The human fell silent.</p>
+
+        <p>The Devil leaned in. &ldquo;Logic is a hindrance to worship. They will believe war is for peace, massacre is for justice&mdash;&rdquo;</p>
+
+        <p>&ldquo;But this is the world we live in.&rdquo;</p>
+      </div>
+
+      <!-- Chinese Column (Part 2) -->
+      <div class="col-zh reveal-children">
+        <p>縱使知識入骨，人類仍難繪理想國之藍圖。若「善」無定論，何來萬眾之樂土？又何有天堂？</p>
+
+        <p>惡魔問：「理想社會的核心為何？」</p>
+
+        <p>「政體或意識形態？」</p>
+
+        <p>「皆為末節。核心在於資源掌控。」</p>
+
+        <p>人類覺得有理。魔鬼續道：「坐擁資源需成帝國，鞏固帝國需借恐懼。庸才以暴政統治；智者則樹立『他者』為敵，自詡唯一救贖。最完美的威脅，向來子虛烏有。」</p>
+
+        <p>「如何掌控資源？」</p>
+
+        <p>「控資源者先控人口；控人口者先控女人。欲控女人，必使其卑於男人。」</p>
+
+        <p>「又如何掌控人心？」</p>
+
+        <p>「御心。賦其生存之義，名之以宗教歷史，飾之以自由平等。給予生存之道，彼等便甘願赴死。願為理想捐軀之士，遠勝於畏懼鞭笞之卒。」</p>
+
+        <p>「若這還不夠？」</p>
+
+        <p>「使其永處於匱乏狀態。製造不曾存在的慾望，並稱其進步。」</p>
+
+        <p>人類默然。</p>
+
+        <p>魔鬼俯身耳語：「崇拜不需要邏輯。讓他們相信：戰爭即和平，屠殺即正義——」</p>
+
+        <p>「這就是我們生活的世界。」</p>
+      </div>
+    </div>
+
+    <!-- ── Afterword ── -->
+    <div class="divider reveal">&#10043;</div>
+
+    <div class="bilingual afterword">
+
+      <!-- English Afterword -->
+      <div class="col-en reveal-children">
+        <h2 class="section-title-en">Afterword</h2>
+
+        <p>I've always been an inquisitive child drawn to the &ldquo;big&rdquo; questions. I wrote this story during the pandemic, when the world felt chaotic and desperately in need of help. With nowhere to go, I lived inside my thoughts. It began as a thought experiment: if you had all the power in the world to build an ideal society, what would it look like?</p>
+
+        <p>I imagined different &ldquo;ideal&rdquo; societies, but each time I was able to identify weak points within the structure that ultimately led to its collapse. My protagonist became trapped in a cycle of rising and falling civilizations, and the narrative turned into a tedious ledger of made-up history. That's when I realized the story itself was making the point. The only honest way to tell this story was to leave it open-ended.</p>
+
+        <p>The irony is: depending on your perspective, our living hell may be paradise. We fly. Food arrives at our doorsteps. Diseases can be cured. We're mythical creatures, living in dead people's dreams stretched across millennia. And the price? The planet and the poorest among us&mdash;not so different from selling our souls to the Devil.</p>
+
+        <p>We've reached Mars and sequenced the genome. But since 1848, we've barely reimagined how society itself could work. We're ancient apes wielding 21st-century technology, trapped in 19th-century social structures. With the recent release of the Epstein files, I look at their photos and can't help but think: those are the faces of people living in paradise. I don't know if they will go to hell or not. But in the here and now, they sure live in a vast private Eden&mdash;the one we call modern society.</p>
+
+        <p>Utopia is a fascinating concept that deserves passion but requires humility. We must recognize its inherent absurdity. Without self-awareness, the dream of perfection risks becoming fascism. Utopia is a North Star, not a destination. The moment it's reached, it ceases to be a refuge and becomes a prison.</p>
+
+        <p>It forces us to ask, &ldquo;What if?&rdquo; The moment we believe we've realized an ideal society, or conclude that we never can, we stop questioning. We fail to see when freedom cages us, or when knowledge narrows our minds. We think we're exercising free will, unaware that we are choosing what the economy deems desirable. We pride ourselves on being educated, yet we find it impossible to talk to anyone who disagrees with us.</p>
+
+        <p>The pursuit of utopia is less about the answers and more about the questions. There can never be a perfect system that applies to every society, solves all problems, or lacks any flaws. Still, we can ask meaningful, powerful questions that reshape the way we see the world.</p>
+
+        <p>We don't need a perfect world. We need a world that never stops trying to be better.</p>
+
+        <p style="margin-top: 2em; font-style: italic; text-align: center;">Thank you for reading. I hope this leaves you with questions worth asking. If this story resonated with you, I'd love to hear your thoughts. If you enjoyed this, please consider recommending it to someone who loves big questions as much as you do.</p>
+      </div>
+
+      <!-- Chinese Afterword -->
+      <div class="col-zh reveal-children">
+        <h2 class="section-title-zh">後記</h2>
+
+        <p>我從小就覺得「大問題」很有趣。這篇寓言寫於疫情期間，當時世界一片混亂，人心惶惶。反正哪裡也去不了，我玩起了一個臆想實驗：假如你擁有改造世界的力量，你會建立怎樣的理想國？</p>
+
+        <p>我構想了各種「理想」社會，但每個制度想著想著總能找到瑕疵，沒有哪個能永垂不朽。筆下的故事變成文明興衰的流水帳，像一本沒人想看的假歷史課本。仔細想想，這「徒勞」本身就是答案。要呈現這個主題，最誠實的方法就是沒有答案，開放式收尾。</p>
+
+        <p>諷刺的是：取決於我們的角度，我們身處的人間煉獄或許正是天堂。我們能飛，食物唾手可得，連曾經的絕症都能治癒。我們簡直就是神話裡的生物，活在 30 萬年來成千上萬死者的美夢裡。而這一切的代價呢？我們的星球以及被踩在底層的窮苦人們（例如在剛果開採鈷的人）——說到底，這跟把靈魂賣給惡魔沒什麼兩樣。</p>
+
+        <p>近期艾普斯坦檔案的公開，我看著他們的照片不禁感嘆：這就是生活在天堂的人的臉啊。他們死後會不會下地獄，我不知道。但他們此時此刻，確實生活在這個稱為當今社會的巨大私人樂園。我們登上了火星、完成了基因定序，但自 1848 年以來，幾乎沒有重新想像過社會該如何運作。我們可以說是一群揮舞著 21 世紀尖端武器的遠古猿猴，身處未來，腦袋卻仍困在 19 世紀的體制裡。</p>
+
+        <p>「烏托邦」是個令人神往的命題，它值得我們以熱情去追尋，更需要我們以謙卑去面對。我們得承認這種理想背後的荒謬，因為一旦失去自覺，對完美的憧憬便會淪為暴政的溫床。烏托邦應是引航的北極星，而非停泊的終點站；一旦抵達，那原本的世外桃源，便會轉瞬成為禁錮思想的監獄。</p>
+
+        <p>「烏托邦」迫使我們自問：「假如……會怎樣？」一旦我們自認已形成理想社會，或斷定理想絕不可能實現，便會停止思考。我們將察覺不到自由何時成了束縛、知識如何窄化視野。自認受過良好教育，卻難以與意見相左的人交談。自認在行使自由意志，殊不知只是在消費社會搪塞的價值觀中，認領一個早已被預設好的答案。</p>
+
+        <p>追求烏托邦的意義不在於答案，而在於提問。我想世上不會有能套用在所有社會、解決所有問題，且毫無瑕疵的完美制度。即便如此，我們仍能提出力透紙背的問題，打破假設、挑戰常規，並重塑我們看世界的方式。</p>
+
+        <p>我們需要的不是一個完美的世界，而是一個永遠不放棄「變得更好」的世界。</p>
+
+        <p style="margin-top: 2em; text-align: center;">感謝你的閱讀，如果這個故事引起了你的共鳴，我很想聽聽你的想法。如果你喜歡這部作品，也請將它推薦給同樣熱愛思考「大問題」的朋友 :)</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Footer ── -->
+  <footer class="footer reveal">
+    <img src="pdia-d4277b5b-85e6-4bdc-87d6-57f69cdb870e.jpg" alt="The Flammarion Engraving (1888)" class="footer-image">
+    <p class="footer-engraving">The Flammarion engraving depicts a traveler peering through the edge of the sky to witness the intricate machinery of the universe, symbolizing the pure human desire to transcend the known.</p>
+    <p class="footer-engraving-zh">《弗拉馬里翁版畫》：畫中旅人探出穹蒼邊界，窺視宇宙複雜的神祕結構，象徵人類對突破認知最純粹的渴望。</p>
+    <p class="footer-credit">Cover art: <em>The Flammarion Engraving</em> (1888), via Public Domain Review.</p>
+    <p class="footer-credit" style="margin-top: 0.5rem;">&copy; 2020–2026 Cloe H. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Parallax effect on hero background
+    const heroBg = document.querySelector('.hero-bg');
+    window.addEventListener('scroll', () => {
+      const scrollY = window.scrollY;
+      const heroHeight = document.querySelector('.hero').offsetHeight;
+      if (scrollY < heroHeight) {
+        heroBg.style.transform = `translateY(${scrollY * 0.4}px) scale(1.1)`;
+      }
+    }, { passive: true });
+
+    // Scroll reveal with IntersectionObserver
+    const revealElements = document.querySelectorAll('.reveal, .reveal-children');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    revealElements.forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>

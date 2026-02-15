@@ -1,0 +1,5 @@
+*.pdf
+*.PNG
+Screenshot*
+signature.png
+.DS_Store

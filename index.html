@@ -24,6 +24,15 @@
   <meta name="twitter:description" content="A bilingual philosophical fable about a human who makes a deal with the Devil to build an ideal society. By Cloe H.">
   <meta name="twitter:image" content="https://creativeworks-sketch.github.io/blueprint-for-heaven/pdia-d4277b5b-85e6-4bdc-87d6-57f69cdb870e.jpg">
 
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1R02FZ54S6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-1R02FZ54S6');
+  </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Noto+Serif+TC:wght@400;500;600&display=swap" rel="stylesheet">
@@ -927,6 +936,7 @@
       var bubble = document.getElementById('supportBubble');
       var backdrop = document.getElementById('bubbleBackdrop');
       readBtn.classList.add('hidden');
+      gtag('event', 'click_read');
       setTimeout(function() {
         backdrop.classList.add('show');
         bubble.classList.add('show');
@@ -954,6 +964,8 @@
       var storyArea = document.getElementById('storyArea');
       var footer = document.getElementById('siteFooter');
       var langToggle = document.getElementById('langToggle');
+
+      gtag('event', 'click_start_reading');
 
       // Hide bubble + backdrop
       bubble.classList.remove('show');
@@ -985,6 +997,54 @@
         }, 100);
       }, 400);
     }
+
+    // Track "Support me" link click
+    document.querySelector('.support-bubble .support-btn').addEventListener('click', function() {
+      gtag('event', 'click_support_me');
+    });
+
+    // Reading time tracking
+    var readingStartTime = null;
+    var readingTimeSent = {};
+    function checkReadingTime() {
+      if (!readingStartTime) return;
+      var elapsed = Math.floor((Date.now() - readingStartTime) / 1000);
+      var milestones = [30, 60, 180, 300, 600];
+      milestones.forEach(function(s) {
+        if (elapsed >= s && !readingTimeSent[s]) {
+          readingTimeSent[s] = true;
+          gtag('event', 'reading_time', { seconds: s });
+        }
+      });
+    }
+
+    // Scroll depth tracking
+    var maxScroll = 0;
+    var scrollMilestonesSent = {};
+    function checkScrollDepth() {
+      var storyArea = document.getElementById('storyArea');
+      if (!storyArea || !storyArea.classList.contains('visible')) return;
+      var rect = storyArea.getBoundingClientRect();
+      var storyHeight = storyArea.scrollHeight;
+      var scrolled = window.scrollY - storyArea.offsetTop;
+      var pct = Math.min(100, Math.max(0, Math.floor((scrolled + window.innerHeight) / storyHeight * 100)));
+      if (pct > maxScroll) maxScroll = pct;
+      [25, 50, 75, 100].forEach(function(m) {
+        if (maxScroll >= m && !scrollMilestonesSent[m]) {
+          scrollMilestonesSent[m] = true;
+          gtag('event', 'scroll_depth', { percent: m });
+        }
+      });
+    }
+
+    // Start timers when reading begins
+    var origStartReading = startReading;
+    startReading = function() {
+      origStartReading();
+      readingStartTime = Date.now();
+      setInterval(checkReadingTime, 5000);
+      window.addEventListener('scroll', checkScrollDepth, { passive: true });
+    };
   </script>
 </body>
 </html>

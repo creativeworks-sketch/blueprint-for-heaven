@@ -45,6 +45,11 @@
       line-height: 1.8;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
+      overflow: hidden;
+    }
+
+    body.phase-reading {
+      overflow: auto;
     }
 
     .font-en {
@@ -133,17 +138,6 @@
       font-size: 0.85rem;
       color: #807870;
       letter-spacing: 0.1em;
-    }
-
-    .hero-scroll {
-      position: absolute;
-      bottom: 2.5rem;
-      z-index: 2;
-      animation: float 2.5s ease-in-out infinite;
-      color: #807870;
-      font-size: 1.5rem;
-      cursor: pointer;
-      text-decoration: none;
     }
 
     @keyframes float {
@@ -345,17 +339,22 @@
 
     /* ── Language Toggle ── */
     .lang-toggle {
-      position: absolute;
+      position: fixed;
       top: 1.2rem;
       right: 1.5rem;
       z-index: 100;
-      display: flex;
+      display: none;
       gap: 0.25rem;
       background: rgba(10, 10, 10, 0.7);
       backdrop-filter: blur(8px);
       border: 1px solid #3a3430;
       border-radius: 2rem;
       padding: 0.25rem;
+      transition: opacity 0.5s ease;
+    }
+
+    .lang-toggle.visible {
+      display: flex;
     }
 
     .lang-toggle button {
@@ -419,6 +418,165 @@
       }
     }
 
+    /* ── Read Button (Hero) ── */
+    .read-btn {
+      position: absolute;
+      bottom: 2.5rem;
+      z-index: 2;
+      font-family: 'Cormorant Garamond', 'Georgia', serif;
+      font-size: 1.1rem;
+      letter-spacing: 0.15em;
+      padding: 0.6rem 2.4rem;
+      border: 1px solid #807870;
+      border-radius: 2rem;
+      color: #c8bfb0;
+      background: transparent;
+      cursor: pointer;
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      animation: float 2.5s ease-in-out infinite;
+    }
+
+    .read-btn:hover {
+      background: rgba(200, 191, 176, 0.12);
+      border-color: #c8bfb0;
+      color: #f0e8dc;
+    }
+
+    .read-btn.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* ── Support Bubble ── */
+    /* Backdrop behind bubble — click to dismiss */
+    .bubble-backdrop {
+      position: absolute;
+      inset: 0;
+      z-index: 9;
+      display: none;
+      cursor: pointer;
+    }
+
+    .bubble-backdrop.show {
+      display: block;
+    }
+
+    .support-bubble {
+      position: absolute;
+      z-index: 10;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.3);
+      opacity: 0;
+      pointer-events: none;
+      background: rgba(10, 10, 10, 0.92);
+      backdrop-filter: blur(20px);
+      border: 1px solid #3a3430;
+      border-radius: 1.5rem;
+      padding: 2.5rem 2rem;
+      max-width: 520px;
+      width: 90%;
+      max-height: 85vh;
+      overflow-y: auto;
+      text-align: center;
+      transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .support-bubble.show {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+      pointer-events: auto;
+    }
+
+    .support-bubble.hiding {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.9);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      pointer-events: none;
+    }
+
+    .support-msg {
+      font-size: 1.1rem;
+      color: #b0a898;
+      line-height: 1.8;
+      margin-bottom: 1rem;
+    }
+
+    .support-msg.font-zh {
+      font-size: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .support-options {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .support-btn {
+      font-family: 'Cormorant Garamond', 'Georgia', serif;
+      font-size: 1rem;
+      letter-spacing: 0.08em;
+      padding: 0.55rem 1.8rem;
+      border: 1px solid #807870;
+      border-radius: 2rem;
+      background: transparent;
+      color: #e0d8cc;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .support-btn:hover {
+      background: rgba(224, 216, 204, 0.1);
+      border-color: #c8bfb0;
+      color: #f0e8dc;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .start-btn {
+      display: inline-block;
+      font-family: 'Cormorant Garamond', 'Georgia', serif;
+      font-size: 1rem;
+      letter-spacing: 0.08em;
+      padding: 0.55rem 1.8rem;
+      border: 1px solid #4a4440;
+      border-radius: 2rem;
+      color: #807870;
+      background: transparent;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-top: 1rem;
+    }
+
+    .start-btn:hover {
+      border-color: #807870;
+      color: #c8bfb0;
+    }
+
+    /* ── Story & Footer: hidden until phase 3 ── */
+    .story-area,
+    .footer {
+      opacity: 0;
+      display: none;
+      transition: opacity 0.6s ease;
+    }
+
+    .story-area.visible,
+    .footer.visible {
+      display: block;
+      opacity: 1;
+    }
+
+    /* Language visibility for support bubble */
+    body.lang-en .support-msg.font-zh { display: none; }
+    body.lang-zh .support-msg.font-en { display: none; }
+
     /* ── Animations ── */
 
     /* Parallax hero background */
@@ -470,11 +628,17 @@
 
     /* Respect reduced motion preference */
     @media (prefers-reduced-motion: reduce) {
-      .reveal, .reveal-children p, .hero-content {
+      .reveal, .reveal-children p, .hero-content,
+      .support-bubble, .read-btn {
         opacity: 1;
         transform: none;
         transition: none;
         animation: none;
+      }
+
+      .support-bubble.show {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
       }
     }
   </style>
@@ -491,8 +655,8 @@
     </a>
   </div>
 
-  <!-- ── Language Toggle ── -->
-  <div class="lang-toggle">
+  <!-- ── Language Toggle (hidden until phase 3) ── -->
+  <div class="lang-toggle" id="langToggle">
     <button onclick="setLang('en')">English</button>
     <button onclick="setLang('both')" class="active">Bilingual</button>
     <button onclick="setLang('zh')">中文</button>
@@ -508,198 +672,213 @@
       <p class="hero-author">Cloe H</p>
       <p class="hero-copyright">&copy; 2020–2026 Cloe H. All rights reserved.</p>
     </div>
-    <a href="#story" class="hero-scroll" aria-label="Scroll to story">&#8595;</a>
+    <button class="read-btn" id="readBtn" onclick="openBubble()" aria-label="Read the story">Read</button>
+
+    <!-- ── Backdrop + Support Bubble (inside hero, hidden until phase 2) ── -->
+    <div class="bubble-backdrop" id="bubbleBackdrop" onclick="closeBubble()"></div>
+    <div class="support-bubble" id="supportBubble">
+      <p class="support-msg font-en">If this story moves you, consider buying me a snack.<br>No pressure — it's on the honor system.</p>
+      <p class="support-msg font-zh">如果這個故事觸動了你，請考慮請我吃點東西。<br>隨喜隨緣，全憑心意 :)</p>
+
+      <div class="support-options">
+        <a href="https://creativeworks-sketch.github.io/support.me/" target="_blank" rel="noopener" class="support-btn">Support me</a>
+      </div>
+
+      <button class="start-btn" onclick="startReading()">Start reading</button>
+    </div>
   </section>
 
-  <!-- ── Story ── -->
-  <div class="content-wrapper" id="story">
-    <div class="bilingual">
+  <!-- ── Story (hidden until phase 3) ── -->
+  <div class="story-area" id="storyArea">
+    <div class="content-wrapper" id="story">
+      <div class="bilingual">
 
-      <!-- English Column -->
-      <div class="col-en reveal-children">
-        <p>The taste of blood lingered in the air. A breath of wind drifted by with a hint of burnt flesh. Apart from some faint groans and the flapping of vultures, the earth illuminated by the starry sky was silent.</p>
+        <!-- English Column -->
+        <div class="col-en reveal-children">
+          <p>The taste of blood lingered in the air. A breath of wind drifted by with a hint of burnt flesh. Apart from some faint groans and the flapping of vultures, the earth illuminated by the starry sky was silent.</p>
 
-        <p>A human woke up and found itself surrounded by piles of corpses that stretched over the field in all directions. It grabbed onto a nearby body and realized the face belonged to someone familiar. In a panic, it noticed its legs were gone. Nausea, grief, and despair swept in. The human roared into the sky.</p>
+          <p>A human woke up and found itself surrounded by piles of corpses that stretched over the field in all directions. It grabbed onto a nearby body and realized the face belonged to someone familiar. In a panic, it noticed its legs were gone. Nausea, grief, and despair swept in. The human roared into the sky.</p>
 
-        <p>A slender shadow appeared among the dead. Blinked out. Snapped back across the field. Another blink&mdash;now an arm's length from the human.</p>
+          <p>A slender shadow appeared among the dead. Blinked out. Snapped back across the field. Another blink&mdash;now an arm's length from the human.</p>
 
-        <p>Haloed by the bright moon, the long shadow arched over and pried into the human's eyes. The human glared back. The silhouette was unmistakable: the Devil, drawn by the stench of death.</p>
+          <p>Haloed by the bright moon, the long shadow arched over and pried into the human's eyes. The human glared back. The silhouette was unmistakable: the Devil, drawn by the stench of death.</p>
 
-        <p>&ldquo;I could feast on a soul like yours.&rdquo;</p>
+          <p>&ldquo;I could feast on a soul like yours.&rdquo;</p>
 
-        <p>Without a voice, the Devil's words echoed inside the human's head.</p>
+          <p>Without a voice, the Devil's words echoed inside the human's head.</p>
 
-        <p>&ldquo;Make a wish, and your soul shall be mine.&rdquo;</p>
+          <p>&ldquo;Make a wish, and your soul shall be mine.&rdquo;</p>
 
-        <p>With sounds closer to growls than speech, the human spat blood and words: &ldquo;I want to build an ideal society.&rdquo;</p>
+          <p>With sounds closer to growls than speech, the human spat blood and words: &ldquo;I want to build an ideal society.&rdquo;</p>
 
-        <p>The Devil knelt. Stars stormed toward the moon. Lights and clouds swirled, condensed, and evaporated. The world sank into darkness. A droplet of galaxy fell from the void, shifting like liquid before settling solid on the Devil's palm.</p>
+          <p>The Devil knelt. Stars stormed toward the moon. Lights and clouds swirled, condensed, and evaporated. The world sank into darkness. A droplet of galaxy fell from the void, shifting like liquid before settling solid on the Devil's palm.</p>
 
-        <p>&ldquo;Eat. This is Knowledge.&rdquo;</p>
+          <p>&ldquo;Eat. This is Knowledge.&rdquo;</p>
 
-        <p>Knowledge glided through the human's throat, seeping into every pore like air. Wounds healed. Legs regrew. The human stood up.</p>
+          <p>Knowledge glided through the human's throat, seeping into every pore like air. Wounds healed. Legs regrew. The human stood up.</p>
 
-        <p>The deal was made.</p>
+          <p>The deal was made.</p>
+        </div>
+
+        <!-- Chinese Column (Part 1) -->
+        <div class="col-zh reveal-children">
+          <p>空氣中血腥味瀰漫<br>微風拂過　夾雜著焦肉的氣息<br>除了微弱的呻吟與禿鷹的振翅聲<br>星空照耀的大地一片死寂</p>
+
+          <p>一隻人類醒來<br>發覺自己被屍堆環繞<br>抓住身旁的一具屍體<br>那張臉竟如此熟悉<br>低頭　自己的雙腿已不復存在<br>噁心　悲痛　絕望<br>人類仰天長嘯</p>
+
+          <p>一道修長的影子出現在死者之間<br>一眨眼　消失<br>一眨眼　橫越整片原野<br>一眨眼　近在咫尺</p>
+
+          <p>頭頂明月　長影弓身俯下<br>探入人類的雙眸<br>那輪廓無庸置疑：<br>是惡魔　被死亡的惡臭吸引而來</p>
+
+          <p>「你的靈魂　我可以大快朵頤」</p>
+
+          <p>沒有聲音　話語在人類腦中迴盪</p>
+
+          <p>「以你的靈魂為代價　許願吧」</p>
+
+          <p>人類擠出低吼似的聲音：<br>「我要建立一個理想國」</p>
+
+          <p>惡魔跪下<br>群星朝月亮奔湧<br>光影與雲霧　盤旋　凝聚　蒸發<br>世界陷入黑暗<br>一滴星河從虛空墜落<br>如液體般流轉<br>如固體般停於惡魔掌中</p>
+
+          <p>「吃下去　這是知識」</p>
+
+          <p>知識滑過人類的喉嚨<br>如空氣般滲入每一個毛孔<br>傷口癒合<br>雙腿再生<br>人類站了起來</p>
+
+          <p>契約達成</p>
+        </div>
       </div>
 
-      <!-- Chinese Column (Part 1) -->
-      <div class="col-zh reveal-children">
-        <p>空氣中血腥味瀰漫<br>微風拂過　夾雜著焦肉的氣息<br>除了微弱的呻吟與禿鷹的振翅聲<br>星空照耀的大地一片死寂</p>
+      <!-- ── Section Divider ── -->
+      <div class="divider reveal">&middot; &middot; &middot;</div>
 
-        <p>一隻人類醒來<br>發覺自己被屍堆環繞<br>抓住身旁的一具屍體<br>那張臉竟如此熟悉<br>低頭　自己的雙腿已不復存在<br>噁心　悲痛　絕望<br>人類仰天長嘯</p>
+      <!-- ── Story Part 2: The Dialogue ── -->
+      <div class="bilingual">
 
-        <p>一道修長的影子出現在死者之間<br>一眨眼　消失<br>一眨眼　橫越整片原野<br>一眨眼　近在咫尺</p>
+        <!-- English Column (Part 2) -->
+        <div class="col-en reveal-children">
+          <p>Yet, even with Knowledge coursing through its veins, the human could not conceive the blueprint for an ideal society. If each soul defines &ldquo;good&rdquo; differently, how could one place be ideal for all? How could there be Heaven?</p>
 
-        <p>頭頂明月　長影弓身俯下<br>探入人類的雙眸<br>那輪廓無庸置疑：<br>是惡魔　被死亡的惡臭吸引而來</p>
+          <p>The Devil asked, &ldquo;What sits at the core of an ideal society?&rdquo;</p>
 
-        <p>「你的靈魂　我可以大快朵頤」</p>
+          <p>&ldquo;Government or ideology?&rdquo;</p>
 
-        <p>沒有聲音　話語在人類腦中迴盪</p>
+          <p>&ldquo;They are tools, secondary to the truth. The foundation is the control of resources.&rdquo;</p>
 
-        <p>「以你的靈魂為代價　許願吧」</p>
+          <p>The human agreed. The Devil continued: &ldquo;For abundant resources, you need an empire. To consolidate an empire, you need fear. Only fools rule as tyrants. True leaders make the people fear the &lsquo;other&rsquo; and cast themselves as the only recourse. The best threat is the one you invent.&rdquo;</p>
 
-        <p>人類擠出低吼似的聲音：<br>「我要建立一個理想國」</p>
+          <p>&ldquo;How does one control the resources?&rdquo;</p>
 
-        <p>惡魔跪下<br>群星朝月亮奔湧<br>光影與雲霧　盤旋　凝聚　蒸發<br>世界陷入黑暗<br>一滴星河從虛空墜落<br>如液體般流轉<br>如固體般停於惡魔掌中</p>
+          <p>&ldquo;To control the resources, you control the population. To control the population, you control the women. To control the women, you make them less than men.&rdquo;</p>
 
-        <p>「吃下去　這是知識」</p>
+          <p>&ldquo;How does one control the people?&rdquo;</p>
 
-        <p>知識滑過人類的喉嚨<br>如空氣般滲入每一個毛孔<br>傷口癒合<br>雙腿再生<br>人類站了起來</p>
+          <p>&ldquo;Control the stories they tell. Call them religion or history. Gild them with freedom or equality. Give them a reason to live, then they will die for you. Those who die for ideals are better soldiers than those who fight to avoid the lash.&rdquo;</p>
 
-        <p>契約達成</p>
-      </div>
-    </div>
+          <p>&ldquo;What if that is not enough?&rdquo;</p>
 
-    <!-- ── Section Divider ── -->
-    <div class="divider reveal">&middot; &middot; &middot;</div>
+          <p>&ldquo;Then, keep them in a state of craving. Create desires that never existed and call it progress.&rdquo;</p>
 
-    <!-- ── Story Part 2: The Dialogue ── -->
-    <div class="bilingual">
+          <p>The human fell silent.</p>
 
-      <!-- English Column (Part 2) -->
-      <div class="col-en reveal-children">
-        <p>Yet, even with Knowledge coursing through its veins, the human could not conceive the blueprint for an ideal society. If each soul defines &ldquo;good&rdquo; differently, how could one place be ideal for all? How could there be Heaven?</p>
+          <p>The Devil leaned in. &ldquo;Logic is a hindrance to worship. They will believe war is for peace, massacre is for justice&mdash;&rdquo;</p>
 
-        <p>The Devil asked, &ldquo;What sits at the core of an ideal society?&rdquo;</p>
+          <p>&ldquo;But this is the world we live in.&rdquo;</p>
+        </div>
 
-        <p>&ldquo;Government or ideology?&rdquo;</p>
+        <!-- Chinese Column (Part 2) -->
+        <div class="col-zh reveal-children">
+          <p>縱使知識入骨，人類仍難繪理想國之藍圖。若「善」無定論，何來萬眾之樂土？又何有天堂？</p>
 
-        <p>&ldquo;They are tools, secondary to the truth. The foundation is the control of resources.&rdquo;</p>
+          <p>惡魔問：「理想社會的核心為何？」</p>
 
-        <p>The human agreed. The Devil continued: &ldquo;For abundant resources, you need an empire. To consolidate an empire, you need fear. Only fools rule as tyrants. True leaders make the people fear the &lsquo;other&rsquo; and cast themselves as the only recourse. The best threat is the one you invent.&rdquo;</p>
+          <p>「政體或意識形態？」</p>
 
-        <p>&ldquo;How does one control the resources?&rdquo;</p>
+          <p>「皆為末節。核心在於資源掌控。」</p>
 
-        <p>&ldquo;To control the resources, you control the population. To control the population, you control the women. To control the women, you make them less than men.&rdquo;</p>
+          <p>人類覺得有理。魔鬼續道：「坐擁資源需成帝國，鞏固帝國需借恐懼。庸才以暴政統治；智者則樹立『他者』為敵，自詡唯一救贖。最完美的威脅，向來子虛烏有。」</p>
 
-        <p>&ldquo;How does one control the people?&rdquo;</p>
+          <p>「如何掌控資源？」</p>
 
-        <p>&ldquo;Control the stories they tell. Call them religion or history. Gild them with freedom or equality. Give them a reason to live, then they will die for you. Those who die for ideals are better soldiers than those who fight to avoid the lash.&rdquo;</p>
+          <p>「控資源者先控人口；控人口者先控女人。欲控女人，必使其卑於男人。」</p>
 
-        <p>&ldquo;What if that is not enough?&rdquo;</p>
+          <p>「又如何掌控人心？」</p>
 
-        <p>&ldquo;Then, keep them in a state of craving. Create desires that never existed and call it progress.&rdquo;</p>
+          <p>「御心。賦其生存之義，名之以宗教歷史，飾之以自由平等。給予生存之道，彼等便甘願赴死。願為理想捐軀之士，遠勝於畏懼鞭笞之卒。」</p>
 
-        <p>The human fell silent.</p>
+          <p>「若這還不夠？」</p>
 
-        <p>The Devil leaned in. &ldquo;Logic is a hindrance to worship. They will believe war is for peace, massacre is for justice&mdash;&rdquo;</p>
+          <p>「使其永處於匱乏狀態。製造不曾存在的慾望，並稱其進步。」</p>
 
-        <p>&ldquo;But this is the world we live in.&rdquo;</p>
-      </div>
+          <p>人類默然。</p>
 
-      <!-- Chinese Column (Part 2) -->
-      <div class="col-zh reveal-children">
-        <p>縱使知識入骨，人類仍難繪理想國之藍圖。若「善」無定論，何來萬眾之樂土？又何有天堂？</p>
+          <p>魔鬼俯身耳語：「崇拜不需要邏輯。讓他們相信：戰爭即和平，屠殺即正義——」</p>
 
-        <p>惡魔問：「理想社會的核心為何？」</p>
-
-        <p>「政體或意識形態？」</p>
-
-        <p>「皆為末節。核心在於資源掌控。」</p>
-
-        <p>人類覺得有理。魔鬼續道：「坐擁資源需成帝國，鞏固帝國需借恐懼。庸才以暴政統治；智者則樹立『他者』為敵，自詡唯一救贖。最完美的威脅，向來子虛烏有。」</p>
-
-        <p>「如何掌控資源？」</p>
-
-        <p>「控資源者先控人口；控人口者先控女人。欲控女人，必使其卑於男人。」</p>
-
-        <p>「又如何掌控人心？」</p>
-
-        <p>「御心。賦其生存之義，名之以宗教歷史，飾之以自由平等。給予生存之道，彼等便甘願赴死。願為理想捐軀之士，遠勝於畏懼鞭笞之卒。」</p>
-
-        <p>「若這還不夠？」</p>
-
-        <p>「使其永處於匱乏狀態。製造不曾存在的慾望，並稱其進步。」</p>
-
-        <p>人類默然。</p>
-
-        <p>魔鬼俯身耳語：「崇拜不需要邏輯。讓他們相信：戰爭即和平，屠殺即正義——」</p>
-
-        <p>「這就是我們生活的世界。」</p>
-      </div>
-    </div>
-
-    <!-- ── Afterword ── -->
-    <div class="divider reveal">&#10043;</div>
-
-    <div class="bilingual afterword">
-
-      <!-- English Afterword -->
-      <div class="col-en reveal-children">
-        <h2 class="section-title-en">Afterword</h2>
-
-        <p>I've always been an inquisitive child drawn to the &ldquo;big&rdquo; questions. I wrote this story during the pandemic, when the world felt chaotic and desperately in need of help. With nowhere to go, I lived inside my thoughts. It began as a thought experiment: if you had all the power in the world to build an ideal society, what would it look like?</p>
-
-        <p>I imagined different &ldquo;ideal&rdquo; societies, but each time I was able to identify weak points within the structure that ultimately led to its collapse. My protagonist became trapped in a cycle of rising and falling civilizations, and the narrative turned into a tedious ledger of made-up history. That's when I realized the story itself was making the point. The only honest way to tell this story was to leave it open-ended.</p>
-
-        <p>The irony is: depending on your perspective, our living hell may be paradise. We fly. Food arrives at our doorsteps. Diseases can be cured. We're mythical creatures, living in dead people's dreams stretched across millennia. And the price? The planet and the poorest among us&mdash;not so different from selling our souls to the Devil.</p>
-
-        <p>We've reached Mars and sequenced the genome. But since 1848, we've barely reimagined how society itself could work. We're ancient apes wielding 21st-century technology, trapped in 19th-century social structures. With the recent release of the Epstein files, I look at their photos and can't help but think: those are the faces of people living in paradise. I don't know if they will go to hell or not. But in the here and now, they sure live in a vast private Eden&mdash;the one we call modern society.</p>
-
-        <p>Utopia is a fascinating concept that deserves passion but requires humility. We must recognize its inherent absurdity. Without self-awareness, the dream of perfection risks becoming fascism. Utopia is a North Star, not a destination. The moment it's reached, it ceases to be a refuge and becomes a prison.</p>
-
-        <p>It forces us to ask, &ldquo;What if?&rdquo; The moment we believe we've realized an ideal society, or conclude that we never can, we stop questioning. We fail to see when freedom cages us, or when knowledge narrows our minds. We think we're exercising free will, unaware that we are choosing what the economy deems desirable. We pride ourselves on being educated, yet we find it impossible to talk to anyone who disagrees with us.</p>
-
-        <p>The pursuit of utopia is less about the answers and more about the questions. There can never be a perfect system that applies to every society, solves all problems, or lacks any flaws. Still, we can ask meaningful, powerful questions that reshape the way we see the world.</p>
-
-        <p>We don't need a perfect world. We need a world that never stops trying to be better.</p>
-
-        <p style="margin-top: 2em; font-style: italic; text-align: center;">Thank you for reading. I hope this leaves you with questions worth asking. If this story resonated with you, I'd love to hear your thoughts. If you enjoyed this, please consider recommending it to someone who loves big questions as much as you do.</p>
+          <p>「這就是我們生活的世界。」</p>
+        </div>
       </div>
 
-      <!-- Chinese Afterword -->
-      <div class="col-zh reveal-children">
-        <h2 class="section-title-zh">後記</h2>
+      <!-- ── Afterword ── -->
+      <div class="divider reveal">&#10043;</div>
 
-        <p>我從小就覺得「大問題」很有趣。這篇寓言寫於疫情期間，當時世界一片混亂，人心惶惶。反正哪裡也去不了，我玩起了一個臆想實驗：假如你擁有改造世界的力量，你會建立怎樣的理想國？</p>
+      <div class="bilingual afterword">
 
-        <p>我構想了各種「理想」社會，但每個制度想著想著總能找到瑕疵，沒有哪個能永垂不朽。筆下的故事變成文明興衰的流水帳，像一本沒人想看的假歷史課本。仔細想想，這「徒勞」本身就是答案。要呈現這個主題，最誠實的方法就是沒有答案，開放式收尾。</p>
+        <!-- English Afterword -->
+        <div class="col-en reveal-children">
+          <h2 class="section-title-en">Afterword</h2>
 
-        <p>諷刺的是：取決於我們的角度，我們身處的人間煉獄或許正是天堂。我們能飛，食物唾手可得，連曾經的絕症都能治癒。我們簡直就是神話裡的生物，活在 30 萬年來成千上萬死者的美夢裡。而這一切的代價呢？我們的星球以及被踩在底層的窮苦人們（例如在剛果開採鈷的人）——說到底，這跟把靈魂賣給惡魔沒什麼兩樣。</p>
+          <p>I've always been an inquisitive child drawn to the &ldquo;big&rdquo; questions. I wrote this story during the pandemic, when the world felt chaotic and desperately in need of help. With nowhere to go, I lived inside my thoughts. It began as a thought experiment: if you had all the power in the world to build an ideal society, what would it look like?</p>
 
-        <p>近期艾普斯坦檔案的公開，我看著他們的照片不禁感嘆：這就是生活在天堂的人的臉啊。他們死後會不會下地獄，我不知道。但他們此時此刻，確實生活在這個稱為當今社會的巨大私人樂園。我們登上了火星、完成了基因定序，但自 1848 年以來，幾乎沒有重新想像過社會該如何運作。我們可以說是一群揮舞著 21 世紀尖端武器的遠古猿猴，身處未來，腦袋卻仍困在 19 世紀的體制裡。</p>
+          <p>I imagined different &ldquo;ideal&rdquo; societies, but each time I was able to identify weak points within the structure that ultimately led to its collapse. My protagonist became trapped in a cycle of rising and falling civilizations, and the narrative turned into a tedious ledger of made-up history. That's when I realized the story itself was making the point. The only honest way to tell this story was to leave it open-ended.</p>
 
-        <p>「烏托邦」是個令人神往的命題，它值得我們以熱情去追尋，更需要我們以謙卑去面對。我們得承認這種理想背後的荒謬，因為一旦失去自覺，對完美的憧憬便會淪為暴政的溫床。烏托邦應是引航的北極星，而非停泊的終點站；一旦抵達，那原本的世外桃源，便會轉瞬成為禁錮思想的監獄。</p>
+          <p>The irony is: depending on your perspective, our living hell may be paradise. We fly. Food arrives at our doorsteps. Diseases can be cured. We're mythical creatures, living in dead people's dreams stretched across millennia. And the price? The planet and the poorest among us&mdash;not so different from selling our souls to the Devil.</p>
 
-        <p>「烏托邦」迫使我們自問：「假如……會怎樣？」一旦我們自認已形成理想社會，或斷定理想絕不可能實現，便會停止思考。我們將察覺不到自由何時成了束縛、知識如何窄化視野。自認受過良好教育，卻難以與意見相左的人交談。自認在行使自由意志，殊不知只是在消費社會搪塞的價值觀中，認領一個早已被預設好的答案。</p>
+          <p>We've reached Mars and sequenced the genome. But since 1848, we've barely reimagined how society itself could work. We're ancient apes wielding 21st-century technology, trapped in 19th-century social structures. With the recent release of the Epstein files, I look at their photos and can't help but think: those are the faces of people living in paradise. I don't know if they will go to hell or not. But in the here and now, they sure live in a vast private Eden&mdash;the one we call modern society.</p>
 
-        <p>追求烏托邦的意義不在於答案，而在於提問。我想世上不會有能套用在所有社會、解決所有問題，且毫無瑕疵的完美制度。即便如此，我們仍能提出力透紙背的問題，打破假設、挑戰常規，並重塑我們看世界的方式。</p>
+          <p>Utopia is a fascinating concept that deserves passion but requires humility. We must recognize its inherent absurdity. Without self-awareness, the dream of perfection risks becoming fascism. Utopia is a North Star, not a destination. The moment it's reached, it ceases to be a refuge and becomes a prison.</p>
 
-        <p>我們需要的不是一個完美的世界，而是一個永遠不放棄「變得更好」的世界。</p>
+          <p>It forces us to ask, &ldquo;What if?&rdquo; The moment we believe we've realized an ideal society, or conclude that we never can, we stop questioning. We fail to see when freedom cages us, or when knowledge narrows our minds. We think we're exercising free will, unaware that we are choosing what the economy deems desirable. We pride ourselves on being educated, yet we find it impossible to talk to anyone who disagrees with us.</p>
 
-        <p style="margin-top: 2em; text-align: center;">感謝你的閱讀，如果這個故事引起了你的共鳴，我很想聽聽你的想法。如果你喜歡這部作品，也請將它推薦給同樣熱愛思考「大問題」的朋友 :)</p>
+          <p>The pursuit of utopia is less about the answers and more about the questions. There can never be a perfect system that applies to every society, solves all problems, or lacks any flaws. Still, we can ask meaningful, powerful questions that reshape the way we see the world.</p>
+
+          <p>We don't need a perfect world. We need a world that never stops trying to be better.</p>
+
+          <p style="margin-top: 2em; font-style: italic; text-align: center;">Thank you for reading. I hope this leaves you with questions worth asking. If this story resonated with you, I'd love to hear your thoughts. If you enjoyed this, please consider recommending it to someone who loves big questions as much as you do.</p>
+        </div>
+
+        <!-- Chinese Afterword -->
+        <div class="col-zh reveal-children">
+          <h2 class="section-title-zh">後記</h2>
+
+          <p>我從小就覺得「大問題」很有趣。這篇寓言寫於疫情期間，當時世界一片混亂，人心惶惶。反正哪裡也去不了，我玩起了一個臆想實驗：假如你擁有改造世界的力量，你會建立怎樣的理想國？</p>
+
+          <p>我構想了各種「理想」社會，但每個制度想著想著總能找到瑕疵，沒有哪個能永垂不朽。筆下的故事變成文明興衰的流水帳，像一本沒人想看的假歷史課本。仔細想想，這「徒勞」本身就是答案。要呈現這個主題，最誠實的方法就是沒有答案，開放式收尾。</p>
+
+          <p>諷刺的是：取決於我們的角度，我們身處的人間煉獄或許正是天堂。我們能飛，食物唾手可得，連曾經的絕症都能治癒。我們簡直就是神話裡的生物，活在 30 萬年來成千上萬死者的美夢裡。而這一切的代價呢？我們的星球以及被踩在底層的窮苦人們（例如在剛果開採鈷的人）——說到底，這跟把靈魂賣給惡魔沒什麼兩樣。</p>
+
+          <p>近期艾普斯坦檔案的公開，我看著他們的照片不禁感嘆：這就是生活在天堂的人的臉啊。他們死後會不會下地獄，我不知道。但他們此時此刻，確實生活在這個稱為當今社會的巨大私人樂園。我們登上了火星、完成了基因定序，但自 1848 年以來，幾乎沒有重新想像過社會該如何運作。我們可以說是一群揮舞著 21 世紀尖端武器的遠古猿猴，身處未來，腦袋卻仍困在 19 世紀的體制裡。</p>
+
+          <p>「烏托邦」是個令人神往的命題，它值得我們以熱情去追尋，更需要我們以謙卑去面對。我們得承認這種理想背後的荒謬，因為一旦失去自覺，對完美的憧憬便會淪為暴政的溫床。烏托邦應是引航的北極星，而非停泊的終點站；一旦抵達，那原本的世外桃源，便會轉瞬成為禁錮思想的監獄。</p>
+
+          <p>「烏托邦」迫使我們自問：「假如……會怎樣？」一旦我們自認已形成理想社會，或斷定理想絕不可能實現，便會停止思考。我們將察覺不到自由何時成了束縛、知識如何窄化視野。自認受過良好教育，卻難以與意見相左的人交談。自認在行使自由意志，殊不知只是在消費社會搪塞的價值觀中，認領一個早已被預設好的答案。</p>
+
+          <p>追求烏托邦的意義不在於答案，而在於提問。我想世上不會有能套用在所有社會、解決所有問題，且毫無瑕疵的完美制度。即便如此，我們仍能提出力透紙背的問題，打破假設、挑戰常規，並重塑我們看世界的方式。</p>
+
+          <p>我們需要的不是一個完美的世界，而是一個永遠不放棄「變得更好」的世界。</p>
+
+          <p style="margin-top: 2em; text-align: center;">感謝你的閱讀，如果這個故事引起了你的共鳴，我很想聽聽你的想法。如果你喜歡這部作品，也請將它推薦給同樣熱愛思考「大問題」的朋友 :)</p>
+        </div>
       </div>
-    </div>
 
-    <!-- ── CTA Buttons ── -->
-    <div class="cta-buttons reveal" style="text-align: center; margin-top: 3rem; display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
-      <a href="https://www.instagram.com/chloe.riceball" target="_blank" rel="noopener" style="display: inline-block; padding: 0.75rem 1.8rem; border: 1px solid #4a4440; border-radius: 2rem; color: #c8bfb0; text-decoration: none; font-family: 'Cormorant Garamond', 'Georgia', serif; font-size: 1.05rem; letter-spacing: 0.08em; transition: all 0.3s;">Share your thoughts</a>
-      <a href="https://creativeworks-sketch.github.io/support.me/" target="_blank" rel="noopener" style="display: inline-block; padding: 0.75rem 1.8rem; border: 1px solid #4a4440; border-radius: 2rem; color: #c8bfb0; text-decoration: none; font-family: 'Cormorant Garamond', 'Georgia', serif; font-size: 1.05rem; letter-spacing: 0.08em; transition: all 0.3s;">Support my work</a>
+      <!-- ── CTA Buttons ── -->
+      <div class="cta-buttons reveal" style="text-align: center; margin-top: 3rem; display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+        <a href="https://www.instagram.com/chloe.riceball" target="_blank" rel="noopener" style="display: inline-block; padding: 0.75rem 1.8rem; border: 1px solid #4a4440; border-radius: 2rem; color: #c8bfb0; text-decoration: none; font-family: 'Cormorant Garamond', 'Georgia', serif; font-size: 1.05rem; letter-spacing: 0.08em; transition: all 0.3s;">Share your thoughts</a>
+        <a href="https://creativeworks-sketch.github.io/support.me/" target="_blank" rel="noopener" style="display: inline-block; padding: 0.75rem 1.8rem; border: 1px solid #4a4440; border-radius: 2rem; color: #c8bfb0; text-decoration: none; font-family: 'Cormorant Garamond', 'Georgia', serif; font-size: 1.05rem; letter-spacing: 0.08em; transition: all 0.3s;">Support my work</a>
+      </div>
     </div>
   </div>
 
-  <!-- ── Footer ── -->
-  <footer class="footer reveal">
+  <!-- ── Footer (hidden until phase 3) ── -->
+  <footer class="footer reveal" id="siteFooter">
     <img src="pdia-d4277b5b-85e6-4bdc-87d6-57f69cdb870e.jpg" alt="The Flammarion Engraving (1888)" class="footer-image">
     <p class="footer-engraving">The Flammarion engraving depicts a traveler peering through the edge of the sky to witness the intricate machinery of the universe, symbolizing the pure human desire to transcend the known.</p>
     <p class="footer-engraving-zh">《弗拉馬里翁版畫》：畫中旅人探出穹蒼邊界，窺視宇宙複雜的神祕結構，象徵人類對突破認知最純粹的渴望。</p>
@@ -720,17 +899,19 @@
     }, { passive: true });
 
     // Scroll reveal with IntersectionObserver
-    const revealElements = document.querySelectorAll('.reveal, .reveal-children');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    function initScrollReveal() {
+      const revealElements = document.querySelectorAll('.reveal, .reveal-children');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
-    revealElements.forEach(el => observer.observe(el));
+      revealElements.forEach(el => observer.observe(el));
+    }
 
     // Language toggle
     function setLang(lang) {
@@ -738,6 +919,71 @@
       if (lang !== 'both') document.body.classList.add('lang-' + lang);
       document.querySelectorAll('.lang-toggle button').forEach(btn => btn.classList.remove('active'));
       event.target.classList.add('active');
+    }
+
+    // Phase 2: Open support bubble
+    function openBubble() {
+      var readBtn = document.getElementById('readBtn');
+      var bubble = document.getElementById('supportBubble');
+      var backdrop = document.getElementById('bubbleBackdrop');
+      readBtn.classList.add('hidden');
+      setTimeout(function() {
+        backdrop.classList.add('show');
+        bubble.classList.add('show');
+      }, 150);
+    }
+
+    // Dismiss bubble (click outside)
+    function closeBubble() {
+      var readBtn = document.getElementById('readBtn');
+      var bubble = document.getElementById('supportBubble');
+      var backdrop = document.getElementById('bubbleBackdrop');
+      bubble.classList.remove('show');
+      bubble.classList.add('hiding');
+      setTimeout(function() {
+        bubble.classList.remove('hiding');
+        backdrop.classList.remove('show');
+        readBtn.classList.remove('hidden');
+      }, 400);
+    }
+
+    // Phase 3: Start reading
+    function startReading() {
+      var bubble = document.getElementById('supportBubble');
+      var backdrop = document.getElementById('bubbleBackdrop');
+      var storyArea = document.getElementById('storyArea');
+      var footer = document.getElementById('siteFooter');
+      var langToggle = document.getElementById('langToggle');
+
+      // Hide bubble + backdrop
+      bubble.classList.remove('show');
+      bubble.classList.add('hiding');
+      backdrop.classList.remove('show');
+
+      setTimeout(function() {
+        bubble.classList.remove('hiding');
+
+        // Enable scrolling
+        document.body.classList.add('phase-reading');
+
+        // Show story + footer + lang toggle
+        storyArea.style.display = 'block';
+        footer.style.display = 'block';
+
+        // Trigger reflow then fade in
+        storyArea.offsetHeight;
+        storyArea.classList.add('visible');
+        footer.classList.add('visible');
+        langToggle.classList.add('visible');
+
+        // Init scroll reveal for story elements
+        initScrollReveal();
+
+        // Scroll to story
+        setTimeout(function() {
+          document.getElementById('story').scrollIntoView({ behavior: 'smooth' });
+        }, 100);
+      }, 400);
     }
   </script>
 </body>

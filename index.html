@@ -552,6 +552,89 @@
       color: #f0e8dc;
     }
 
+    /* ── Password Modal ── */
+    .password-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      background: rgba(0, 0, 0, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+    }
+
+    .password-overlay.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .password-modal {
+      background: rgba(10, 10, 10, 0.95);
+      backdrop-filter: blur(20px);
+      border: 1px solid #3a3430;
+      border-radius: 1.5rem;
+      padding: 2.5rem 2rem;
+      max-width: 400px;
+      width: 90%;
+      text-align: center;
+      transform: scale(0.9);
+      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .password-overlay.show .password-modal {
+      transform: scale(1);
+    }
+
+    .password-modal p {
+      font-family: 'Cormorant Garamond', 'Georgia', serif;
+      font-size: 1.05rem;
+      color: #b0a898;
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.04em;
+    }
+
+    .password-input {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid #3a3430;
+      border-radius: 0.5rem;
+      padding: 0.65rem 1rem;
+      font-family: 'Cormorant Garamond', 'Georgia', serif;
+      font-size: 1.05rem;
+      color: #e8e0d4;
+      text-align: center;
+      letter-spacing: 0.1em;
+      outline: none;
+      transition: border-color 0.3s;
+      margin-bottom: 1rem;
+    }
+
+    .password-input:focus {
+      border-color: #807870;
+    }
+
+    .password-input.error {
+      border-color: #8b4040;
+      animation: shake 0.3s ease;
+    }
+
+    .password-error {
+      font-family: 'Cormorant Garamond', 'Georgia', serif;
+      font-size: 0.9rem;
+      color: #8b4040;
+      margin-bottom: 1rem;
+      min-height: 1.2em;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-6px); }
+      75% { transform: translateX(6px); }
+    }
+
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(-8px); }
       to { opacity: 1; transform: translateY(0); }
@@ -663,6 +746,16 @@
 </head>
 <body>
 
+  <!-- ── Password Modal ── -->
+  <div class="password-overlay" id="passwordOverlay">
+    <div class="password-modal">
+      <p>Enter the password to read</p>
+      <input class="password-input" id="passwordInput" type="password" placeholder="password" autocomplete="off" />
+      <div class="password-error" id="passwordError"></div>
+      <button class="start-btn" onclick="checkPassword()">Enter</button>
+    </div>
+  </div>
+
   <!-- ── Social Icons ── -->
   <div class="social-icons">
     <a href="https://www.youtube.com/@Chloe.standup" target="_blank" rel="noopener" aria-label="YouTube">
@@ -690,7 +783,7 @@
       <p class="hero-author">Cloe H</p>
       <p class="hero-copyright">&copy; 2020–2026 Cloe H. All rights reserved.</p>
     </div>
-    <button class="read-btn" id="readBtn" onclick="openBubble()" aria-label="Read the story">Read</button>
+    <button class="read-btn" id="readBtn" onclick="showPasswordModal()" aria-label="Read the story">Read</button>
 
     <!-- ── Backdrop + Support Bubble (inside hero, hidden until phase 2) ── -->
     <div class="bubble-backdrop" id="bubbleBackdrop" onclick="closeBubble()"></div>
@@ -890,7 +983,6 @@
       <!-- ── CTA Buttons ── -->
       <div class="cta-buttons reveal" style="text-align: center; margin-top: 3rem; display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
         <a href="https://www.instagram.com/reel/DUz33HlEp4n/?igsh=MTNyZ2VwajA0ZWsycw==" target="_blank" rel="noopener" style="display: inline-block; padding: 0.75rem 1.8rem; border: 1px solid #4a4440; border-radius: 2rem; color: #c8bfb0; text-decoration: none; font-family: 'Cormorant Garamond', 'Georgia', serif; font-size: 1.05rem; letter-spacing: 0.08em; transition: all 0.3s;">Share your thoughts</a>
-        <a href="https://creativeworks-sketch.github.io/support.me/" target="_blank" rel="noopener" style="display: inline-block; padding: 0.75rem 1.8rem; border: 1px solid #4a4440; border-radius: 2rem; color: #c8bfb0; text-decoration: none; font-family: 'Cormorant Garamond', 'Georgia', serif; font-size: 1.05rem; letter-spacing: 0.08em; transition: all 0.3s;">Support my work</a>
       </div>
     </div>
   </div>
@@ -939,6 +1031,31 @@
       event.target.classList.add('active');
     }
 
+    // Password gate
+    function showPasswordModal() {
+      var overlay = document.getElementById('passwordOverlay');
+      var input = document.getElementById('passwordInput');
+      overlay.classList.add('show');
+      setTimeout(function() { input.focus(); }, 300);
+    }
+
+    function checkPassword() {
+      var input = document.getElementById('passwordInput');
+      var errorEl = document.getElementById('passwordError');
+      if (input.value === 'Abracadabra') {
+        document.getElementById('passwordOverlay').classList.remove('show');
+        input.value = '';
+        errorEl.textContent = '';
+        startReading();
+      } else {
+        input.classList.add('error');
+        errorEl.textContent = 'Incorrect password.';
+        setTimeout(function() { input.classList.remove('error'); }, 400);
+        input.value = '';
+        input.focus();
+      }
+    }
+
     // Phase 2: Open support bubble
     function openBubble() {
       var readBtn = document.getElementById('readBtn');
@@ -968,6 +1085,7 @@
 
     // Phase 3: Start reading
     function startReading() {
+      var readBtn = document.getElementById('readBtn');
       var bubble = document.getElementById('supportBubble');
       var backdrop = document.getElementById('bubbleBackdrop');
       var storyArea = document.getElementById('storyArea');
@@ -976,7 +1094,8 @@
 
       gtag('event', 'click_start_reading');
 
-      // Hide bubble + backdrop
+      // Hide read button, bubble + backdrop
+      readBtn.classList.add('hidden');
       bubble.classList.remove('show');
       bubble.classList.add('hiding');
       backdrop.classList.remove('show');
@@ -1006,6 +1125,11 @@
         }, 100);
       }, 400);
     }
+
+    // Allow Enter key to submit password
+    document.getElementById('passwordInput').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') checkPassword();
+    });
 
     // Track "Support me" link click
     document.querySelector('.support-bubble .support-btn').addEventListener('click', function() {
